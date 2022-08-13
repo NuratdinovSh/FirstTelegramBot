@@ -2,7 +2,7 @@ from email import message
 from turtle import up
 from webbrowser import get
 from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters, CallbackQueryHandler
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
@@ -15,6 +15,33 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     reply_markup = InlineKeyboardMarkup(keyboard)
 
     await update.message.reply_text("Hello, choose your language", reply_markup=reply_markup)
+
+async def button(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+
+    await query.answer()
+
+    if query.data == "Russian":
+        q1 = KeyboardButton("Что ты делаешь?")
+        q2 = KeyboardButton("Как ты?")
+        q3 = KeyboardButton("Где ты?")
+        q4 = KeyboardButton('Как тебя зовут?')
+        menu = KeyboardButton("Меню")
+        replymarkup = ReplyKeyboardMarkup(keyboard=[[q1, q2, q3], [q4], [menu]], resize_keyboard=True)
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="Задайте эти вопросы боту", reply_markup=replymarkup)
+    elif query.data == "English":
+        q1 = KeyboardButton("What are you doing?")
+        q2 = KeyboardButton("How are you?")
+        q3 = KeyboardButton("Where are you?")
+        q4 = KeyboardButton("What is your name?")
+        menu = KeyboardButton("Menu")
+        replymarkup = ReplyKeyboardMarkup(keyboard=[[q1, q2, q3], [q4], [menu]], resize_keyboard=True)
+        #await update.message.reply_text(text="Ask these questions to the bot", reply_markup=replymarkup)
+        #await query.edit_message_text(text="Ask these questions to the bot", reply_markup=replymarkup)
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="Ask these questions to the bot", reply_markup=replymarkup)
+
+
+   #await query.edit_message_text(text=f"Selected language: {query.data}")
 
 async def getPhoto(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Nice photo")
@@ -78,6 +105,7 @@ if __name__ == '__main__':
     application.add_handler(start_handler)
     application.add_handler(photo_handler)
     application.add_handler(message_handler)
+    application.add_handler(CallbackQueryHandler(button))
     
 
     application.run_polling()
