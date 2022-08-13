@@ -1,6 +1,6 @@
 from turtle import up
 from webbrowser import get
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton
+from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
