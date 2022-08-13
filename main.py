@@ -14,19 +14,11 @@ async def getPhoto(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def getMessage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = update.message.text
-    if message == "Russian🇷🇺":
+    if message == "Russian🇷🇺" or message == "Русский🇷🇺":
         q1 = KeyboardButton("Что ты делаешь?")
         q2 = KeyboardButton("Как ты?")
         q3 = KeyboardButton("Где ты?")
         q4 = KeyboardButton('Как тебя зовут?')
-        menu = KeyboardButton("Меню")
-        replymarkup = ReplyKeyboardMarkup(keyboard=[[q1, q2, q3], [q4], [menu]], resize_keyboard=True)
-        await update.message.reply_text(text="Задайте эти вопросы боту", reply_markup=replymarkup)
-    elif message == "Русский🇷🇺":
-        q1 = KeyboardButton("Что ты делаешь?")
-        q2 = KeyboardButton("Как ты?")
-        q3 = KeyboardButton("Где ты?")
-        q4 = KeyboardButton("Как тебя зовут?")
         menu = KeyboardButton("Меню")
         replymarkup = ReplyKeyboardMarkup(keyboard=[[q1, q2, q3], [q4], [menu]], resize_keyboard=True)
         await update.message.reply_text(text="Задайте эти вопросы боту", reply_markup=replymarkup)
@@ -35,21 +27,13 @@ async def getMessage(update: Update, context: ContextTypes.DEFAULT_TYPE):
         engbutton = KeyboardButton(text="Английский🇺🇸")
         replymarkup = ReplyKeyboardMarkup(keyboard= [[rubutton, engbutton]], resize_keyboard=True)
         await update.message.reply_text(text="Выберите свой язык", reply_markup=replymarkup)
-    elif message == "English🇺🇸":
+    elif message == "English🇺🇸" or message == "Английский🇺🇸":
         q1 = KeyboardButton("What are you doing?")
         q2 = KeyboardButton("How are you?")
         q3 = KeyboardButton("Where are you?")
         q4 = KeyboardButton("What is your name?")
         menu = KeyboardButton("Menu")
         replymarkup = ReplyKeyboardMarkup(keyboard=[[q1, q2, q3], [q4], [menu]], resize_keyboard=True)
-        await update.message.reply_text(text="Ask these questions to the bot", reply_markup=replymarkup)
-    elif message == "Английский🇺🇸":
-        q1 = KeyboardButton("What are you doing?")
-        q2 = KeyboardButton("How are you?")
-        q3 = KeyboardButton("Where are you?")
-        q4 = KeyboardButton("What is your name?")
-        menu = KeyboardButton("Menu")
-        replymarkup = ReplyKeyboardMarkup(keyboard=[[q1, q2, q3,], [q4], [menu]], resize_keyboard=True)
         await update.message.reply_text(text="Ask these questions to the bot", reply_markup=replymarkup)
     elif message == "Menu":
         rubutton = KeyboardButton(text="Russian🇷🇺")
