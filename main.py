@@ -1,13 +1,20 @@
+from email import message
 from turtle import up
 from webbrowser import get
-from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton
+from telegram import Update, ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    rubutton = KeyboardButton(text="Russian🇷🇺")
-    engbutton = KeyboardButton(text="English🇺🇸")
-    replymarkup = ReplyKeyboardMarkup(keyboard= [[rubutton, engbutton]], resize_keyboard=True)
-    await update.message.reply_text(text="Hello, choose your language", reply_markup=replymarkup)   
+    keyboard = [
+        [
+            InlineKeyboardButton("Russian🇷🇺", callback_data="Russian"),
+            InlineKeyboardButton("English🇺🇸", callback_data="English")
+        ]
+    ]
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
+    await update.message.reply_text("Hello, choose your language", reply_markup=reply_markup)
 
 async def getPhoto(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Nice photo")
@@ -59,7 +66,7 @@ async def getMessage(update: Update, context: ContextTypes.DEFAULT_TYPE):
     else:
         await update.message.reply_text("wrong question")
 
-    
+
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token('5536219218:AAHrE4bI1fxDlD88TxWNGv6_oqb-gl5DFRw').build()
